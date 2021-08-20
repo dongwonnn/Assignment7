@@ -11,4 +11,6 @@ export const TIME_FORM: any = {
   second: '2-digit',
 };
 
-export const INPUT_ERROR_MESSAGE = '검색어를 입력해주세요.';
+export const EXCEPTION_MODAL_TITLE: string = '예외 발생';
+export const BLANK_ERROR_MESSAGE: string = '검색어를 입력해주세요.';
+export const SELECT_NOT_ERROR_MESSAGE: string = '검색어를 입력해주세요.';

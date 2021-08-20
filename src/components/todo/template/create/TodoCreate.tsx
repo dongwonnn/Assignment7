@@ -2,8 +2,9 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 import { PlusCircleOutlined } from '@ant-design/icons';
 import { Itodo } from 'hooks/useTodo';
-import { INPUT_ERROR_MESSAGE } from 'utils/constants';
+import { BLANK_ERROR_MESSAGE, SELECT_NOT_ERROR_MESSAGE } from 'utils/constants';
 import { Modal, DatePicker } from 'antd';
+import { exceptionModal } from 'utils/exceptionModal';
 const { RangePicker } = DatePicker;
 
 interface TodoCreateProps {
@@ -29,19 +30,13 @@ const TodoCreate = ({ nextId, createTodo, incrementNextId }: TodoCreateProps) =>
     e.preventDefault();
 
     if (!value) {
-      Modal.error({
-        title: '예외 발생',
-        content: `${INPUT_ERROR_MESSAGE}`,
-      });
+      exceptionModal(BLANK_ERROR_MESSAGE);
 
       return;
     }
 
     if (!startDate || !deadline) {
-      Modal.error({
-        title: '예외 발생',
-        content: `시작 일과, 완료 목표일을 등록해주세요.`,
-      });
+      exceptionModal(SELECT_NOT_ERROR_MESSAGE);
 
       return;
     }
