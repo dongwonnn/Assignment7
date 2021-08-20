@@ -2,6 +2,9 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 import { PlusCircleOutlined } from '@ant-design/icons';
 import { Itodo } from 'components/todo/TodoService';
+import ExceptionModal from 'components/ExceptionModal';
+import { INPUT_ERROR_MESSAGE } from 'utils/constants';
+import { Modal } from 'antd';
 
 interface TodoCreateProps {
   nextId: number;
@@ -12,19 +15,24 @@ interface TodoCreateProps {
 const TodoCreate = ({ nextId, createTodo, incrementNextId }: TodoCreateProps) => {
   const [open, setOpen] = useState(false);
   const [value, setValue] = useState('');
-  const [inputError, setInputError] = useState(false);
 
   const handleToggle = () => setOpen(!open);
+
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => setValue(e.target.value);
+
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault(); // 새로고침 방지
+    e.preventDefault();
 
     if (value === '') {
-      setInputError(true);
+      Modal.error({
+        title: '예외 발생',
+        content: `${INPUT_ERROR_MESSAGE}`,
+      });
+
       return;
     }
 
-    setInputError(false);
+    setOpen(false);
 
     createTodo({
       id: nextId,
@@ -46,7 +54,6 @@ const TodoCreate = ({ nextId, createTodo, incrementNextId }: TodoCreateProps) =>
             <PlusCircleOutlined />
           </CircleButton>
         </InsertForm>
-        {inputError && <p>검색어를 입력해주세요.</p>}
       </InsertFormPositioner>
     </>
   );
@@ -76,19 +83,14 @@ const InsertFormPositioner = styled.div`
   width: 100%;
   border-bottom: 1px solid #eeeeee;
   background: #eeeeee;
-  padding-left: 40px;
-  padding-top: 36px;
-  padding-right: 60px;
-  padding-bottom: 36px;
-
-  p {
-    color: red;
-    padding: 10px;
-  }
 `;
 
 const InsertForm = styled.form`
   display: flex;
+  padding-left: 40px;
+  padding-top: 36px;
+  padding-right: 60px;
+  padding-bottom: 36px;
 `;
 
 const Input = styled.input`
