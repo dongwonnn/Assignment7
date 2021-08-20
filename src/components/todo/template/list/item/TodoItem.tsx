@@ -1,5 +1,5 @@
 import { CheckOutlined, DeleteOutlined } from '@ant-design/icons';
-import { Itodo } from 'components/todo/TodoService';
+import { Itodo } from 'hooks/useTodo';
 import React, { useCallback, useState } from 'react';
 import styled, { css } from 'styled-components';
 
@@ -24,6 +24,7 @@ const TodoItem = ({ toggleTodo, removeTodo, todo }: TodoItemProps) => {
       <CheckCircle done={done} onClick={() => handleToggle(id)}>
         {done && <CheckOutlined />}
       </CheckCircle>
+      <Text done={done}>{id}</Text>
       <Text done={done}>{text}</Text>
       <Text done={done}>시작일: {startDate}</Text>
       <Text done={done}>마감일: {deadline}</Text>

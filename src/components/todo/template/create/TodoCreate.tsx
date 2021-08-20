@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import { PlusCircleOutlined } from '@ant-design/icons';
-import { Itodo } from 'components/todo/TodoService';
+import { Itodo } from 'hooks/useTodo';
 import { INPUT_ERROR_MESSAGE } from 'utils/constants';
 import { Modal, DatePicker } from 'antd';
 const { RangePicker } = DatePicker;

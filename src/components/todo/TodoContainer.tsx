@@ -1,4 +1,4 @@
-import { useTodo } from './TodoService';
+import { useTodo } from 'hooks/useTodo';
 import TodoTemplate from './template/TodoTemplate';
 import TodoHead from './template/head/TodoHead';
 import TodoList from './template/list/TodoList';

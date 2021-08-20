@@ -9,10 +9,8 @@ export type Itodo = {
   deadline: string;
 };
 
-let initialTodos: Itodo[] = [];
-
 export const useTodo = () => {
-  const [todoState, setTodoState] = useState(initialTodos);
+  const [todoState, setTodoState] = useState<Itodo[]>([]);
   const [nextIdState, setNextIdState] = useState(0);
 
   useEffect(() => {
@@ -46,27 +44,34 @@ export const useTodo = () => {
   };
 
   const createTodo = (todo: Itodo) => {
+    const nextId = nextIdState;
     setTodoState((prevState) =>
       prevState.concat({
         ...todo,
-        id: nextIdState,
+        id: nextId,
       }),
     );
   };
 
   const loadData = () => {
     let data = localStorage.getItem('todos') || '';
+    let lastId = localStorage.getItem('lastId');
 
-    initialTodos = JSON.parse(data);
-
-    if (initialTodos && initialTodos.length >= 1) {
+    setNextIdState(Number(lastId) + 1);
+    setTodoState(JSON.parse(data));
+    if (todoState && todoState.length >= 1) {
       incrementNextId();
     }
-    setTodoState(initialTodos);
   };
 
   const saveData = () => {
+    let lastId = 0;
+    if (todoState.length > 0) {
+      lastId = todoState[todoState.length - 1].id;
+    }
+
     localStorage.setItem('todos', JSON.stringify(todoState));
+    localStorage.setItem('lastId', JSON.stringify(lastId));
   };
 
   return {
