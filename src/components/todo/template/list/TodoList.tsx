@@ -12,8 +12,9 @@ interface TodoListProps {
 const TodoList = ({ toggleTodo, removeTodo, todos }: TodoListProps) => {
   return (
     <TodoListBlock>
-      {todos &&
-        todos.map((todo) => <TodoItem toggleTodo={toggleTodo} removeTodo={removeTodo} key={todo.id} todo={todo} />)}
+      {todos.map((todo) => (
+        <TodoItem toggleTodo={toggleTodo} removeTodo={removeTodo} key={todo.id} todo={todo} />
+      ))}
     </TodoListBlock>
   );
 };
