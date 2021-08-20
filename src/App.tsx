@@ -7,13 +7,13 @@ function App() {
   //@TODO login
   let isLogged = true;
 
-  const RenderLayout = (
-    <div>
-      <TodoContainer />
-    </div>
-  );
+  // const RenderLayout = (
+  //   <div>
+  //     <TodoContainer />
+  //   </div>
+  // );
 
-  return isLogged ? RenderLayout : <Spinner mask />;
+  return isLogged ? <TodoContainer /> : <Spinner mask />;
 }
 
 export default App;
