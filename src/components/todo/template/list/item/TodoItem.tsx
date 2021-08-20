@@ -10,7 +10,7 @@ interface TodoItemProps {
 }
 
 const TodoItem = ({ toggleTodo, removeTodo, todo }: TodoItemProps) => {
-  const { id, text, done } = todo;
+  const { id, text, done, startDate, deadline } = todo;
   const handleToggle = useCallback((id) => {
     toggleTodo(id);
   }, []);
@@ -25,6 +25,8 @@ const TodoItem = ({ toggleTodo, removeTodo, todo }: TodoItemProps) => {
         {done && <CheckOutlined />}
       </CheckCircle>
       <Text done={done}>{text}</Text>
+      <Text done={done}>시작일: {startDate}</Text>
+      <Text done={done}>마감일: {deadline}</Text>
       <Remove onClick={() => handleRemove(id)}>
         <DeleteOutlined />
       </Remove>

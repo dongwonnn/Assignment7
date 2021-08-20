@@ -2,9 +2,9 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 import { PlusCircleOutlined } from '@ant-design/icons';
 import { Itodo } from 'components/todo/TodoService';
-import ExceptionModal from 'components/ExceptionModal';
 import { INPUT_ERROR_MESSAGE } from 'utils/constants';
-import { Modal } from 'antd';
+import { Modal, DatePicker } from 'antd';
+const { RangePicker } = DatePicker;
 
 interface TodoCreateProps {
   nextId: number;
@@ -13,17 +13,22 @@ interface TodoCreateProps {
 }
 
 const TodoCreate = ({ nextId, createTodo, incrementNextId }: TodoCreateProps) => {
-  const [open, setOpen] = useState(false);
   const [value, setValue] = useState('');
+  const [startDate, setStartDate] = useState('');
+  const [deadline, setDeadline] = useState('');
 
-  const handleToggle = () => setOpen(!open);
+  const handleDateChange = (_: any, dateStrings: [string, string]) => {
+    const [start, end] = dateStrings;
+    setStartDate(start);
+    setDeadline(end);
+  };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => setValue(e.target.value);
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    if (value === '') {
+    if (!value) {
       Modal.error({
         title: '예외 발생',
         content: `${INPUT_ERROR_MESSAGE}`,
@@ -32,17 +37,25 @@ const TodoCreate = ({ nextId, createTodo, incrementNextId }: TodoCreateProps) =>
       return;
     }
 
-    setOpen(false);
+    if (!startDate || !deadline) {
+      Modal.error({
+        title: '예외 발생',
+        content: `시작 일과, 완료 목표일을 등록해주세요.`,
+      });
+
+      return;
+    }
 
     createTodo({
       id: nextId,
       text: value,
       done: false,
+      startDate,
+      deadline,
     });
     incrementNextId(); // nextId 하나 증가
 
     setValue(''); // input 초기화
-    setOpen(false); // open 닫기
   };
 
   return (
@@ -50,10 +63,11 @@ const TodoCreate = ({ nextId, createTodo, incrementNextId }: TodoCreateProps) =>
       <InsertFormPositioner>
         <InsertForm onSubmit={handleSubmit}>
           <Input autoFocus placeholder="What's need to be done?" onChange={handleChange} value={value} />
-          <CircleButton onClick={handleToggle} open={open}>
+          <CircleButton>
             <PlusCircleOutlined />
           </CircleButton>
         </InsertForm>
+        <RangePicker onChange={handleDateChange} />
       </InsertFormPositioner>
     </>
   );
@@ -61,7 +75,7 @@ const TodoCreate = ({ nextId, createTodo, incrementNextId }: TodoCreateProps) =>
 
 export default React.memo(TodoCreate);
 
-const CircleButton = styled.button<{ open: boolean }>`
+const CircleButton = styled.button`
   background: #33bb77;
   width: 50px;
   height: 50px;
