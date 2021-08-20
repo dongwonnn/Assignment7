@@ -46,6 +46,8 @@ const TodoCreate = ({ nextId, createTodo, incrementNextId }: TodoCreateProps) =>
       return;
     }
 
+    incrementNextId(); // nextId 하나 증가
+
     createTodo({
       id: nextId,
       text: value,
@@ -53,7 +55,6 @@ const TodoCreate = ({ nextId, createTodo, incrementNextId }: TodoCreateProps) =>
       startDate,
       deadline,
     });
-    incrementNextId(); // nextId 하나 증가
 
     setValue(''); // input 초기화
   };

@@ -13,7 +13,7 @@ let initialTodos: Itodo[] = [];
 
 export const useTodo = () => {
   const [todoState, setTodoState] = useState(initialTodos);
-  var nextIdState = 0;
+  const [nextIdState, setNextIdState] = useState(0);
 
   useEffect(() => {
     loadData();
@@ -24,7 +24,7 @@ export const useTodo = () => {
   }, [todoState]);
 
   const incrementNextId = () => {
-    nextIdState = nextIdState + 1;
+    setNextIdState(nextIdState + 1);
   };
 
   const toggleTodo = (id: number) => {
@@ -46,11 +46,10 @@ export const useTodo = () => {
   };
 
   const createTodo = (todo: Itodo) => {
-    const nextId = todoState.length + 1;
     setTodoState((prevState) =>
       prevState.concat({
         ...todo,
-        id: nextId,
+        id: nextIdState,
       }),
     );
   };
