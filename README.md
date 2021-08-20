@@ -15,3 +15,6 @@ Created with CodeSandbox
 
 - TodoService.tsx의 initialTodos = JSON.parse(data); 에러
 - Snipper의  readonly ["data-mask"]: boolean; 에러
+
+### 개선 사항
+- TodoHead.js 시간 표시, component stlye 개선
