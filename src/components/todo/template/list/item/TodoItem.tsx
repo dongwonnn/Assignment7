@@ -10,6 +10,7 @@ interface TodoItemProps {
 }
 
 const TodoItem = ({ toggleTodo, removeTodo, todo }: TodoItemProps) => {
+  const { id, text, done } = todo;
   const handleToggle = useCallback((id) => {
     toggleTodo(id);
   }, []);
@@ -20,11 +21,11 @@ const TodoItem = ({ toggleTodo, removeTodo, todo }: TodoItemProps) => {
 
   return (
     <TodoItemBlock>
-      <CheckCircle done={todo.done} onClick={() => handleToggle(todo.id)}>
-        {todo.done && <CheckOutlined />}
+      <CheckCircle done={done} onClick={() => handleToggle(id)}>
+        {done && <CheckOutlined />}
       </CheckCircle>
-      <Text done={todo.done}>{todo.text}</Text>
-      <Remove onClick={() => handleRemove(todo.id)}>
+      <Text done={done}>{text}</Text>
+      <Remove onClick={() => handleRemove(id)}>
         <DeleteOutlined />
       </Remove>
     </TodoItemBlock>
@@ -39,6 +40,7 @@ const Remove = styled.div`
   justify-content: center;
   color: #119955;
   font-size: 16px;
+  cursor: pointer;
 `;
 
 const TodoItemBlock = styled.div`

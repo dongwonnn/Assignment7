@@ -1,7 +1,58 @@
-import React, { useState } from "react";
-import styled from "styled-components";
-import { PlusCircleOutlined } from "@ant-design/icons";
-import { Itodo } from "components/todo/TodoService";
+import React, { useState } from 'react';
+import styled from 'styled-components';
+import { PlusCircleOutlined } from '@ant-design/icons';
+import { Itodo } from 'components/todo/TodoService';
+
+interface TodoCreateProps {
+  nextId: number;
+  createTodo: (todo: Itodo) => void;
+  incrementNextId: () => void;
+}
+
+const TodoCreate = ({ nextId, createTodo, incrementNextId }: TodoCreateProps) => {
+  const [open, setOpen] = useState(false);
+  const [value, setValue] = useState('');
+  const [inputError, setInputError] = useState(false);
+
+  const handleToggle = () => setOpen(!open);
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => setValue(e.target.value);
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault(); // 새로고침 방지
+
+    if (value === '') {
+      setInputError(true);
+      return;
+    }
+
+    setInputError(false);
+
+    createTodo({
+      id: nextId,
+      text: value,
+      done: false,
+    });
+    incrementNextId(); // nextId 하나 증가
+
+    setValue(''); // input 초기화
+    setOpen(false); // open 닫기
+  };
+
+  return (
+    <>
+      <InsertFormPositioner>
+        <InsertForm onSubmit={handleSubmit}>
+          <Input autoFocus placeholder="What's need to be done?" onChange={handleChange} value={value} />
+          <CircleButton onClick={handleToggle} open={open}>
+            <PlusCircleOutlined />
+          </CircleButton>
+        </InsertForm>
+        {inputError && <p>검색어를 입력해주세요.</p>}
+      </InsertFormPositioner>
+    </>
+  );
+};
+
+export default React.memo(TodoCreate);
 
 const CircleButton = styled.button<{ open: boolean }>`
   background: #33bb77;
@@ -24,15 +75,20 @@ const CircleButton = styled.button<{ open: boolean }>`
 const InsertFormPositioner = styled.div`
   width: 100%;
   border-bottom: 1px solid #eeeeee;
-`;
-
-const InsertForm = styled.form`
-  display: flex;
   background: #eeeeee;
   padding-left: 40px;
   padding-top: 36px;
   padding-right: 60px;
   padding-bottom: 36px;
+
+  p {
+    color: red;
+    padding: 10px;
+  }
+`;
+
+const InsertForm = styled.form`
+  display: flex;
 `;
 
 const Input = styled.input`
@@ -48,57 +104,3 @@ const Input = styled.input`
     font-size: 16px;
   }
 `;
-
-interface TodoCreateProps {
-  nextId: number;
-  createTodo: (todo: Itodo) => void;
-  incrementNextId: () => void;
-}
-
-const TodoCreate = ({
-  nextId,
-  createTodo,
-  incrementNextId
-}: TodoCreateProps) => {
-  const [open, setOpen] = useState(false);
-  const [value, setValue] = useState("");
-
-  const handleToggle = () => setOpen(!open);
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) =>
-    setValue(e.target.value);
-
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault(); // 새로고침 방지
-
-    createTodo({
-      id: nextId,
-      text: value,
-      done: false
-    });
-    incrementNextId(); // nextId 하나 증가
-
-    setValue(""); // input 초기화
-    setOpen(false); // open 닫기
-  };
-
-  return (
-    <>
-      <InsertFormPositioner>
-        <InsertForm onSubmit={handleSubmit}>
-          <Input
-            autoFocus
-            placeholder="What's need to be done?"
-            onChange={handleChange}
-            value={value}
-          />
-
-          <CircleButton onClick={handleToggle} open={open}>
-            <PlusCircleOutlined />
-          </CircleButton>
-        </InsertForm>
-      </InsertFormPositioner>
-    </>
-  );
-};
-
-export default React.memo(TodoCreate);

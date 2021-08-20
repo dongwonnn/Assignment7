@@ -13,7 +13,6 @@ const TodoContainer = () => {
       <TodoTemplate>
         <TodoHead />
         <TodoCreate nextId={nextIdState} createTodo={createTodo} incrementNextId={incrementNextId} />
-        {/* toggleTodo 완료, removeTodo 휴지통, todos: 리스트 겠지? */}
         <TodoList toggleTodo={toggleTodo} removeTodo={removeTodo} todos={todoState} />
         <TodoFooter todos={todoState} />
       </TodoTemplate>
