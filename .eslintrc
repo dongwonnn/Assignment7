@@ -1,0 +1,4 @@
+{ 
+    "plugins": ["react", "react-hooks"], 
+    "parser": "babel-eslint" 
+}
