@@ -1,5 +1,5 @@
-import { Itodo } from 'hooks/useTodo';
 import React from 'react';
+import { Itodo } from 'hooks/useTodo';
 import styled from 'styled-components';
 
 interface HooksTodoHeadProps {

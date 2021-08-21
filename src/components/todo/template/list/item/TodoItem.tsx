@@ -1,6 +1,6 @@
-import { CheckOutlined, DeleteOutlined } from '@ant-design/icons';
-import { Itodo } from 'hooks/useTodo';
 import React, { useCallback, useState } from 'react';
+import { Itodo } from 'hooks/useTodo';
+import { CheckOutlined, DeleteOutlined } from '@ant-design/icons';
 import styled, { css } from 'styled-components';
 
 interface TodoItemProps {
@@ -25,7 +25,6 @@ const TodoItem = ({ toggleTodo, removeTodo, todo }: TodoItemProps) => {
       <CheckCircle done={done} onClick={() => handleCompleteToggle(id)}>
         {done && <CheckOutlined />}
       </CheckCircle>
-      <Text done={done}>{id}</Text>
       <Text done={done}>{text}</Text>
       <DateText done={done}>
         {startDate} ~ {deadline}

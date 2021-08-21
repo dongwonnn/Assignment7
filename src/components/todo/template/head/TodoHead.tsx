@@ -1,9 +1,8 @@
 import React, { useEffect, useState } from 'react';
-import styled from 'styled-components';
 import { DATE_FORM, TIME_FORM } from 'utils/constants';
+import styled from 'styled-components';
 
 const TodoHead = () => {
-  //@TODO 현재 시간을 표시해야합니다.
   const [date] = useState(new Date().toLocaleDateString('en-US', DATE_FORM));
   const [time, setTime] = useState(new Date().toLocaleTimeString('en-US', TIME_FORM));
 

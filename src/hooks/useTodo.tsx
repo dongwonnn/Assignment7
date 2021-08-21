@@ -12,8 +12,6 @@ export type Itodo = {
 export const useTodo = () => {
   const [todoState, setTodoState] = useState<Itodo[]>([]);
   const [nextIdState, setNextIdState] = useState(0);
-  console.log(todoState);
-  console.log(nextIdState);
 
   useEffect(() => {
     loadData();

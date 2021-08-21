@@ -1,7 +1,7 @@
-import { Itodo } from 'hooks/useTodo';
 import React from 'react';
-import styled from 'styled-components';
 import TodoItem from './item/TodoItem';
+import { Itodo } from 'hooks/useTodo';
+import styled from 'styled-components';
 
 interface TodoListProps {
   todos: Itodo[];

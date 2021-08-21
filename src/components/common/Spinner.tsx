@@ -1,9 +1,8 @@
 import React, { ReactElement } from 'react';
-import styled from 'styled-components';
+import Loading from './Loading';
 import { Spin, Row, Col } from 'antd';
 import { SpinSize } from 'antd/lib/spin';
-
-import Loading from './Loading';
+import styled from 'styled-components';
 
 interface ISpinnerProps {
   tip?: string;

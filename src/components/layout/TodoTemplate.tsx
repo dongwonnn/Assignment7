@@ -13,7 +13,7 @@ export default React.memo(TodoTemplate);
 
 const TodoTemplateBlock = styled.div`
   width: 70%;
-  height: 800px;
+  height: 100vh;
 
   min-width: 360px;
   max-width: 700px;
@@ -25,8 +25,6 @@ const TodoTemplateBlock = styled.div`
 
   margin: 0 auto;
 
-  margin-top: 96px;
-  margin-bottom: 32px;
   display: flex;
   flex-direction: column;
 `;
