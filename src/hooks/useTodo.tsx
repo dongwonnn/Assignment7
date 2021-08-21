@@ -12,6 +12,8 @@ export type Itodo = {
 export const useTodo = () => {
   const [todoState, setTodoState] = useState<Itodo[]>([]);
   const [nextIdState, setNextIdState] = useState(0);
+  console.log(todoState);
+  console.log(nextIdState);
 
   useEffect(() => {
     loadData();
@@ -26,7 +28,6 @@ export const useTodo = () => {
   };
 
   const toggleTodo = (id: number) => {
-    //@TODO
     setTodoState((prevState) =>
       prevState.map((todo: Itodo) =>
         todo.id === id
@@ -44,11 +45,9 @@ export const useTodo = () => {
   };
 
   const createTodo = (todo: Itodo) => {
-    const nextId = nextIdState;
     setTodoState((prevState) =>
       prevState.concat({
         ...todo,
-        id: nextId,
       }),
     );
   };
@@ -59,9 +58,6 @@ export const useTodo = () => {
 
     setNextIdState(Number(lastId) + 1);
     setTodoState(JSON.parse(data));
-    if (todoState && todoState.length >= 1) {
-      incrementNextId();
-    }
   };
 
   const saveData = () => {

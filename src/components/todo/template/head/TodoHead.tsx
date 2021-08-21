@@ -2,39 +2,6 @@ import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { DATE_FORM, TIME_FORM } from 'utils/constants';
 
-const TodoHeadBlock = styled.div`
-  padding-top: 52px;
-  padding-bottom: 24px;
-  border-bottom: 3px solid #33bb77;
-
-  p {
-    text-align: center;
-    font-size: 22px;
-    color: #119955;
-    padding-top: 5px;
-  }
-`;
-
-// const TodoHeadBlock = styled.div`
-//   display: flex;
-//   justify-content: center;
-//   padding-top: 52px;
-//   padding-bottom: 24px;
-//   border-bottom: 3px solid #33bb77;
-// `;
-
-// const DateText = styled.div`
-//   font-size: 26px;
-//   color: #119955;
-//   padding-left: 10px;
-// `;
-
-// const DayText = styled.div`
-//   font-size: 22px;
-//   color: #119955;
-//   padding-top: 5px;
-// `;
-
 const TodoHead = () => {
   //@TODO 현재 시간을 표시해야합니다.
   const [date] = useState(new Date().toLocaleDateString('en-US', DATE_FORM));
@@ -58,3 +25,21 @@ const TodoHead = () => {
 };
 
 export default React.memo(TodoHead);
+
+const TodoHeadBlock = styled.div`
+  padding-top: 52px;
+  border-bottom: 3px solid #33bb77;
+
+  p {
+    text-align: center;
+    color: #119955;
+    padding-top: 5px;
+  }
+
+  p:first-child {
+    font-size: 22px;
+  }
+  p:last-child {
+    font-size: 26px;
+  }
+`;

@@ -3,8 +3,9 @@ import styled from 'styled-components';
 import { PlusCircleOutlined } from '@ant-design/icons';
 import { Itodo } from 'hooks/useTodo';
 import { BLANK_ERROR_MESSAGE, SELECT_NOT_ERROR_MESSAGE } from 'utils/constants';
-import { Modal, DatePicker } from 'antd';
+import { DatePicker } from 'antd';
 import { exceptionModal } from 'utils/exceptionModal';
+
 const { RangePicker } = DatePicker;
 
 interface TodoCreateProps {
@@ -59,11 +60,11 @@ const TodoCreate = ({ nextId, createTodo, incrementNextId }: TodoCreateProps) =>
       <InsertFormPositioner>
         <InsertForm onSubmit={handleSubmit}>
           <Input autoFocus placeholder="What's need to be done?" onChange={handleChange} value={value} />
+          <RangePickerWrapper onChange={handleDateChange} />
           <CircleButton>
             <PlusCircleOutlined />
           </CircleButton>
         </InsertForm>
-        <RangePicker onChange={handleDateChange} />
       </InsertFormPositioner>
     </>
   );
@@ -91,22 +92,20 @@ const CircleButton = styled.button`
 
 const InsertFormPositioner = styled.div`
   width: 100%;
+  padding: 36px 60px 36px 40px;
   border-bottom: 1px solid #eeeeee;
   background: #eeeeee;
 `;
 
 const InsertForm = styled.form`
   display: flex;
-  padding-left: 40px;
-  padding-top: 36px;
-  padding-right: 60px;
-  padding-bottom: 36px;
+  justify-content: center;
 `;
 
 const Input = styled.input`
   padding: 12px;
   border: 1px solid #dddddd;
-  width: 100%;
+  width: 60%;
   outline: none;
   font-size: 21px;
   box-sizing: border-box;
@@ -115,4 +114,8 @@ const Input = styled.input`
     color: #dddddd;
     font-size: 16px;
   }
+`;
+
+const RangePickerWrapper = styled(RangePicker)`
+  width: 40%;
 `;

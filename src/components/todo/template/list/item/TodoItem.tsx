@@ -11,7 +11,8 @@ interface TodoItemProps {
 
 const TodoItem = ({ toggleTodo, removeTodo, todo }: TodoItemProps) => {
   const { id, text, done, startDate, deadline } = todo;
-  const handleToggle = useCallback((id) => {
+
+  const handleCompleteToggle = useCallback((id) => {
     toggleTodo(id);
   }, []);
 
@@ -21,12 +22,14 @@ const TodoItem = ({ toggleTodo, removeTodo, todo }: TodoItemProps) => {
 
   return (
     <TodoItemBlock>
-      <CheckCircle done={done} onClick={() => handleToggle(id)}>
+      <CheckCircle done={done} onClick={() => handleCompleteToggle(id)}>
         {done && <CheckOutlined />}
       </CheckCircle>
+      <Text done={done}>{id}</Text>
       <Text done={done}>{text}</Text>
-      <Text done={done}>시작일: {startDate}</Text>
-      <Text done={done}>마감일: {deadline}</Text>
+      <DateText done={done}>
+        {startDate} ~ {deadline}
+      </DateText>
       <Remove onClick={() => handleRemove(id)}>
         <DeleteOutlined />
       </Remove>
@@ -47,13 +50,22 @@ const Remove = styled.div`
 
 const TodoItemBlock = styled.div`
   display: flex;
+  justify-content: sp;
   align-items: center;
-  padding-top: 12px;
-  padding-bottom: 12px;
+  padding: 12px 0;
   &:hover {
     ${Remove} {
       display: initial;
     }
+  }
+
+  div:nth-child(3),
+  div:nth-child(4) {
+    font-size: 14px;
+  }
+
+  div:nth-child(2) {
+    font-size: 16px;
   }
 `;
 
@@ -78,7 +90,17 @@ const CheckCircle = styled.div<{ done: boolean }>`
 
 const Text = styled.div<{ done: boolean }>`
   flex: 1;
-  font-size: 16px;
+  color: #119955;
+  ${(props) =>
+    props.done &&
+    css`
+      color: #ced4da;
+      text-decoration: line-through;
+    `}
+`;
+
+const DateText = styled.div<{ done: boolean }>`
+  padding: 0 20px;
   color: #119955;
   ${(props) =>
     props.done &&
