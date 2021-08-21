@@ -1,7 +1,42 @@
-import { CheckOutlined, DeleteOutlined } from "@ant-design/icons";
-import { Itodo } from "components/todo/TodoService";
-import React from "react";
-import styled, { css } from "styled-components";
+import React, { useCallback, useState } from 'react';
+import { Itodo } from 'hooks/useTodo';
+import { CheckOutlined, DeleteOutlined } from '@ant-design/icons';
+import styled, { css } from 'styled-components';
+
+interface TodoItemProps {
+  toggleTodo: (id: number) => void;
+  removeTodo: (id: number) => void;
+  todo: Itodo;
+}
+
+const TodoItem = ({ toggleTodo, removeTodo, todo }: TodoItemProps) => {
+  const { id, text, done, startDate, deadline } = todo;
+
+  const handleCompleteToggle = useCallback((id) => {
+    toggleTodo(id);
+  }, []);
+
+  const handleRemove = useCallback((id) => {
+    removeTodo(id);
+  }, []);
+
+  return (
+    <TodoItemBlock>
+      <CheckCircle done={done} onClick={() => handleCompleteToggle(id)}>
+        {done && <CheckOutlined />}
+      </CheckCircle>
+      <Text done={done}>{text}</Text>
+      <DateText done={done}>
+        {startDate} ~ {deadline}
+      </DateText>
+      <Remove onClick={() => handleRemove(id)}>
+        <DeleteOutlined />
+      </Remove>
+    </TodoItemBlock>
+  );
+};
+
+export default React.memo(TodoItem);
 
 const Remove = styled.div`
   display: flex;
@@ -9,17 +44,27 @@ const Remove = styled.div`
   justify-content: center;
   color: #119955;
   font-size: 16px;
+  cursor: pointer;
 `;
 
 const TodoItemBlock = styled.div`
   display: flex;
+  justify-content: sp;
   align-items: center;
-  padding-top: 12px;
-  padding-bottom: 12px;
+  padding: 12px 0;
   &:hover {
     ${Remove} {
       display: initial;
     }
+  }
+
+  div:nth-child(3),
+  div:nth-child(4) {
+    font-size: 14px;
+  }
+
+  div:nth-child(2) {
+    font-size: 16px;
   }
 `;
 
@@ -44,7 +89,6 @@ const CheckCircle = styled.div<{ done: boolean }>`
 
 const Text = styled.div<{ done: boolean }>`
   flex: 1;
-  font-size: 16px;
   color: #119955;
   ${(props) =>
     props.done &&
@@ -54,29 +98,13 @@ const Text = styled.div<{ done: boolean }>`
     `}
 `;
 
-interface TodoItemProps {
-  toggleTodo: (id: number) => void;
-  removeTodo: (id: number) => void;
-  todo: Itodo;
-}
-
-const TodoItem = ({ toggleTodo, removeTodo, todo }: TodoItemProps) => {
-  const done = false;
-  const handleToggle = () => {};
-
-  const handleRemove = () => {};
-
-  return (
-    <TodoItemBlock>
-      <CheckCircle done={done} onClick={handleToggle}>
-        {done && <CheckOutlined />}
-      </CheckCircle>
-      <Text done={done}>{todo.text}</Text>
-      <Remove onClick={handleRemove}>
-        <DeleteOutlined />
-      </Remove>
-    </TodoItemBlock>
-  );
-};
-
-export default React.memo(TodoItem);
+const DateText = styled.div<{ done: boolean }>`
+  padding: 0 20px;
+  color: #119955;
+  ${(props) =>
+    props.done &&
+    css`
+      color: #ced4da;
+      text-decoration: line-through;
+    `}
+`;

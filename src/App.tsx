@@ -1,19 +1,12 @@
 import React from 'react';
+import Spinner from 'components/common/Spinner';
+import TodoContainer from 'components/todo/TodoContainer';
 import 'antd/dist/antd.css';
-import Spinner from './components/common/Spinner';
-import TodoContainer from './components/todo/TodoContainer';
 
 function App() {
-  //@TODO login
-  let isLogged = true;
+  const isLogged = true;
 
-  const RenderLayout = (
-    <div>
-      <TodoContainer />
-    </div>
-  );
-
-  return isLogged ? RenderLayout : <Spinner mask />;
+  return isLogged ? <TodoContainer /> : <Spinner mask />;
 }
 
 export default App;

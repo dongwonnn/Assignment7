@@ -1,6 +1,21 @@
-import { Itodo } from "components/todo/TodoService";
-import React from "react";
-import styled from "styled-components";
+import React from 'react';
+import { Itodo } from 'hooks/useTodo';
+import styled from 'styled-components';
+
+interface HooksTodoHeadProps {
+  todos: Itodo[];
+}
+
+const Todofooter = ({ todos }: HooksTodoHeadProps) => {
+  const undoneTasks = todos.filter((todo) => !todo.done);
+  return (
+    <TodoFooterBlock>
+      <CenterText>{undoneTasks.length} items left</CenterText>
+    </TodoFooterBlock>
+  );
+};
+
+export default React.memo(Todofooter);
 
 const TodoFooterBlock = styled.div`
   display: flex;
@@ -11,24 +26,7 @@ const TodoFooterBlock = styled.div`
   padding-bottom: 24px;
 `;
 
-const LeftText = styled.div`
+const CenterText = styled.div`
   color: #33bb77;
   font-size: 18px;
 `;
-
-interface HooksTodoHeadProps {
-  todos: Itodo[];
-}
-
-const Todofooter = ({ todos }: HooksTodoHeadProps) => {
-  const undoneTasks = todos.filter((todo) => !todo.done);
-  return (
-    <TodoFooterBlock>
-      <LeftText className="tasks-left">
-        {undoneTasks.length} items left
-      </LeftText>
-    </TodoFooterBlock>
-  );
-};
-
-export default React.memo(Todofooter);
