@@ -52,7 +52,11 @@ export const useTodo = () => {
 
   const loadData = () => {
     let data = localStorage.getItem('todos') || '';
-    let lastId = localStorage.getItem('lastId');
+    let lastId = localStorage.getItem('lastId') || 0;
+
+    if (data === '') {
+      data = JSON.stringify([]);
+    }
 
     setNextIdState(Number(lastId) + 1);
     setTodoState(JSON.parse(data));
